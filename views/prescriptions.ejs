@@ -1,0 +1,23 @@
+<h1>Список рецептов</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Клиент</th>
+            <th>Врач</th>
+            <th>Рецепт</th>
+            <th>Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% prescriptions.forEach(prescription => { %>
+            <tr>
+                <td><%= prescription.id %></td>
+                <td><%= prescription.client_id %></td>
+                <td><%= prescription.doctor_id %></td>
+                <td><%= prescription.prescription %></td>
+                <td><%= prescription.date %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Панель администратора</h1>
+
+    <!-- Navigation Links -->
+    <nav>
+        <a href="/">Главная</a> |
+        <a href="/register">Регистрация клиента</a>
+    </nav>
+
+    <hr>
+
+    <!-- Section for Adding a New Client -->
+    <section>
+        <h2>Добавить клиента</h2>
+        <form action="/addClient" method="post">
+            <label for="clientName">Имя клиента:</label>
+            <input type="text" id="clientName" name="clientName" required>
+
+            <label for="clientContact">Контактная информация:</label>
+            <input type="text" id="clientContact" name="clientContact" required>
+
+            <button type="submit">Добавить клиента</button>
+        </form>
+    </section>
+
+    <hr>
+
+    <!-- Section for Viewing and Filtering Employees -->
+    <section>
+        <h2>Список сотрудников</h2>
+        <form action="/filterEmployees" method="get">
+            <label for="roleFilter">Фильтр по роли:</label>
+            <select id="roleFilter" name="role">
+                <option value="">Все</option>
+                <option value="doctor">Врач</option>
+                <option value="staff">Персонал</option>
+                <option value="admin">Администратор</option>
+            </select>
+            <button type="submit">Применить фильтр</button>
+        </form>
+
+        <ul id="employeeList">
+            <% employees.forEach(employee => { %>
+                <li><strong><%= employee.username %></strong> - <%= employee.role %></li>
+            <% }); %>
+        </ul>
+    </section>
+
+    <hr>
+
+    <!-- Section for Listing Prescriptions and Assigned Doctors -->
+    <section>
+        <h2>Рецепты и назначенные врачи</h2>
+        <ul id="prescriptionsList">
+            <% prescriptions.forEach(prescription => { %>
+                <li>Пациент: <strong><%= prescription.clientName %></strong>, Врач: <%= prescription.doctor %>, Рецепт: <%= prescription.details %></li>
+            <% }); %>
+        </ul>
+    </section>
+
+    <hr>
+
+    <!-- Export Database Section -->
+    <section>
+        <h2>Экспорт записей</h2>
+        <form action="/exportRecords" method="post">
+            <label for="exportFormat">Формат экспорта:</label>
+            <select id="exportFormat" name="format">
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+            </select>
+            <button type="submit">Экспортировать</button>
+        </form>
+    </section>
+</body>
+</html>
+
