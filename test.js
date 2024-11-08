@@ -133,7 +133,7 @@ app.get('/admin/filterEmployees', checkAuth, checkAdmin, (req, res) => {
 app.get('/admin/exportRecords', checkAuth, checkAdmin, (req, res) => {
     db.all('SELECT * FROM employees', [], (err, employees) => {
         if (err) return res.status(500).send('Ошибка базы данных');
-
+        console.log(err);
         const csv = employees.map(emp => `${emp.id},${emp.name},${emp.position}`).join('\n');
         res.header('Content-Type', 'text/csv');
         res.attachment('employees.csv');

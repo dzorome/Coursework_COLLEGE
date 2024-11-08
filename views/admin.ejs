@@ -20,7 +20,7 @@
     <!-- Section for Adding a New Client -->
     <section>
         <h2>Добавить клиента</h2>
-        <form action="/addClient" method="post">
+        <form action="/admin/addClient" method="post">
             <label for="clientName">Имя клиента:</label>
             <input type="text" id="clientName" name="clientName" required>
 
@@ -36,7 +36,7 @@
     <!-- Section for Viewing and Filtering Employees -->
     <section>
         <h2>Список сотрудников</h2>
-        <form action="/filterEmployees" method="get">
+        <form action="/admin/filterEmployees" method="get">
             <label for="roleFilter">Фильтр по роли:</label>
             <select id="roleFilter" name="role">
                 <option value="">Все</option>
@@ -71,7 +71,7 @@
     <!-- Export Database Section -->
     <section>
         <h2>Экспорт записей</h2>
-        <form action="/exportRecords" method="post">
+        <form action="/admin/exportRecords" method="get">
             <label for="exportFormat">Формат экспорта:</label>
             <select id="exportFormat" name="format">
                 <option value="csv">CSV</option>
