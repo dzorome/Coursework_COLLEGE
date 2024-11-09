@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Медицинский центр БОБО - мы сломаем твою жизнь</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Частная Клиника БОБО</h1>
+        <p>Ваше здоровье - наши убытки</p>
+        <nav>
+            <ul>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#employees">Сотрудники</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#feedback">Обратная связь</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>О нас</h2>
+        <p>Мы предлагаем полный спектр медицинских услуг для поддержания вашего здоровья. Уже на протяжении 7 лет мы оказываем профессиональную помощь всем людям Колотушкино.</p>
+    </section>
+
+    <section id="services">
+        <h2>Наши услуги</h2>
+        <ul>
+            <li>Обследование и диагностика</li>
+            <li>Консультации специалистов</li>
+            <li>Стационарное лечение</li>
+	    <li>Проверка черепа по стандартам немецкой френологии</li>
+        </ul>
+    </section>
+
+    <section id="employees">
+        <h2>Сотрудники</h2>
+        <table id="employees-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Должность</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Сотрудники будут добавлены здесь через JS -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="testimonials">
+        <h2>Отзывы пациентов</h2>
+        <div class="testimonial">
+            <p>"Отличная клиника, отдельная благодарность кардиологу за честность! Когда увидел мою ЭКГ, сразу предложил выгодную рассрочку на ритуальные услуги и место на кладбище с видом на парк. Забота о пациентах на высшем уровне! "</p>
+            <p>- Ирина К.</p>
+        </div>
+        <div class="testimonial">
+            <p>"Спасибо анестезиологу за незабываемые впечатления! После его наркоза я не только забыл про операцию, но и про последние 10 лет жизни."</p>
+            <p>- Алексей С.</p>
+        </div>
+	<div class="testimonial">
+	    <p>"Именно в этой клинике я и стал антинаталистом."</p>
+	    <p>- Кирилл К.</p>
+    </section>
+
+    <section id="news">
+        <h2>Новости и события</h2>
+        <ul>
+            <li>Новое оборудование для диагностики - теперь в нашем центре!</li>
+            <li>Запуск программы профилактических осмотров для пожилых людей.</li>
+        </ul>
+    </section>
+
+    <section id="faq">
+        <h2>Часто задаваемые вопросы</h2>
+        <div class="faq-item">
+            <h3>Как записаться на прием?</h3>
+            <p>Вы можете записаться на прием через наш сайт или по телефону.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Работаете ли вы по выходным?</h3>
+            <p>Да, мы работаем по выходным с 9:00 до 17:00.</p>
+        </div>
+    </section>
+
+    <section id="feedback">
+        <h2>Обратная связь</h2>
+        <form id="feedback-form">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Сообщение:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+
+    <section id="contacts">
+        <h2>Контакты</h2>
+        <p>Адрес: с.Колотушкино, ул. Пушкина, д. 10</p>
+        <p>Телефон: +7 (999) 123-45-67</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Частная Клиника БОБО. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Функция для загрузки списка сотрудников
+        function loadEmployees() {
+            fetch('/employees')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#employees-table tbody');
+                    tableBody.innerHTML = ''; // Очистка содержимого таблицы
+                    data.data.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employee.id}</td>
+                            <td>${employee.name}</td>
+                            <td>${employee.position}</td>  
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка при загрузке данных сотрудников:', error);
+                });
+        }
+
+        // Обработка отправки формы обратной связи
+        document.getElementById('feedback-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/submit-feedback', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Ваше сообщение отправлено!');
+                event.target.reset(); // Очистка формы
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке формы:', error);
+            });
+        });
+
+        // Загрузка сотрудников при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadEmployees);
+    </script>
+</body>
+</html>
